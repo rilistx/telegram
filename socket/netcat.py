@@ -1,5 +1,3 @@
-# This is Server
-
 import socket
 
 HOST = ('localhost', 10000)
