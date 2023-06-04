@@ -15,6 +15,7 @@ from telebot.core.config.settings import settings
 from telebot.core.handlers.base import get_inline
 from telebot.core.handlers.callback import select_macbook
 from telebot.core.utils.callbackdata import MacInfo
+from telebot.core.handlers.pay import order, pre_checkout_query,successful_payment
 
 
 async def start():
@@ -26,6 +27,9 @@ async def start():
 
     dp.startup.register(start_bot)
     dp.shutdown.register(stop_bot)
+    dp.message.register(order, Command(commands='pay'))
+    dp.pre_checkout_query.register(pre_checkout_query)
+    dp.message.register(successful_payment, ContentTypesFilter(content_types=[ContentType.SUCCESSFUL_PAYMENT]))
     dp.message.register(get_location, ContentTypesFilter(content_types=[ContentType.LOCATION]))
     dp.message.register(get_hello, F.text == 'Привет')
     # dp.callback_query.register(select_macbook, F.data.startswith('apple_'))
